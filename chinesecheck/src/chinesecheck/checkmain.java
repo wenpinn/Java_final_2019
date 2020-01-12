@@ -27,7 +27,6 @@ import java.awt.Button;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Event;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Label;
@@ -36,20 +35,13 @@ import java.awt.Point;
 import java.awt.TextField;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
-
 import javax.imageio.ImageIO;
-import javax.swing.text.TabableView;
 
 public class checkmain {
 
@@ -62,8 +54,7 @@ public class checkmain {
 	TextField log_TextField = new TextField(); // 用來記錄ＬＯＧ 位置在最大的文字匡
 	Button startButton = new Button("開始");
 	Button nextstepButton = new Button("下一步");
-	public static int[][] chess_chess = 
-			{ { 7, 5, 3, 1, 0, 2, 4, 6, 8 }, // 0,j;j from 0 to 8
+	public static int[][] chess_chess = { { 7, 5, 3, 1, 0, 2, 4, 6, 8 }, // 0,j;j from 0 to 8
 			{ -1, -1, -1, -1, -1, -1, -1, -1, -1 }, // 1,j
 			{ -1, 9, -1, -1, -1, -1, -1, 10, -1 }, // 2,j
 			{ 11, -1, 12, -1, 13, -1, 14, -1, 15 }, // 3,j
@@ -106,16 +97,9 @@ public class checkmain {
 
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 10; j++) {
-				
-				
-				
-				
+
 				cbPoint[i][j] = new Point();
-				
-				
-				
-				
-				
+
 				cbPoint[i][j].x = (i * 81);
 				cbPoint[i][j].y = 40 + (j * 70);
 				System.out.print(i + "," + j + "");
@@ -125,19 +109,19 @@ public class checkmain {
 			System.out.println();
 		}
 
-//		shape=new line();
-//		for(int i=0;i<9;i++) {//這之後要放到paint
-//			for(int j=0;j<8;j++)
-//			{
-//				
-//				//shape.set(cbPoint[i][j],cbPoint[i][j+1] );
-//				shape.set(cbPoint[i][j], cbPoint[i][j+1]);
-//				list.add(shape);
-//				repaint();
-//				
-//			}
-//			System.out.println();
-//		}
+		// shape=new line();
+		// for(int i=0;i<9;i++) {//這之後要放到paint
+		// for(int j=0;j<8;j++)
+		// {
+		//
+		// //shape.set(cbPoint[i][j],cbPoint[i][j+1] );
+		// shape.set(cbPoint[i][j], cbPoint[i][j+1]);
+		// list.add(shape);
+		// repaint();
+		//
+		// }
+		// System.out.println();
+		// }
 
 		// chess board的i,j chess_chess的 i j;
 
@@ -229,20 +213,15 @@ class mc extends Canvas {
 				tbx = b.y;
 				for (int i = 0; i < 10; i++) {
 					for (int j = 0; j < 9; j++) {
-						if (Math.abs(checkmain.cbPoint[j][i].x - tax) < 25 && Math.abs(checkmain.cbPoint[j][i].y - tay )< 25) {
+						if (Math.abs(checkmain.cbPoint[j][i].x - tax) < 25
+								&& Math.abs(checkmain.cbPoint[j][i].y - tay) < 25) {
 							System.out.println("PPP " + tax + "," + tay);
 							System.out.println("SSS " + checkmain.cbPoint[j][i].x + "," + checkmain.cbPoint[j][i].y);
 						}
 
 					}
 				}
-				
-				
-				
-				
-				
-				
-				
+
 			}
 
 			@Override
@@ -250,16 +229,16 @@ class mc extends Canvas {
 				// TODO Auto-generated method stub
 				b.setLocation(e.getPoint());
 
-//				for(int i=0;i<10;i++) {
-//					for(int j=0;j<9;j++)
-//					{
-//						if(b.x-checkmain.cbPoint[i][j].x<25&&b.y-checkmain.cbPoint[i][j].y<25) {
-//							checkmain.chess_chess[tx][ty]=checkmain.chess_chess[i][j];
-//							checkmain.chess_chess[i][j]=-1;
-//						}
-//					}
-//				}
-//				
+				// for(int i=0;i<10;i++) {
+				// for(int j=0;j<9;j++)
+				// {
+				// if(b.x-checkmain.cbPoint[i][j].x<25&&b.y-checkmain.cbPoint[i][j].y<25) {
+				// checkmain.chess_chess[tx][ty]=checkmain.chess_chess[i][j];
+				// checkmain.chess_chess[i][j]=-1;
+				// }
+				// }
+				// }
+				//
 
 				repaint();
 
@@ -304,19 +283,20 @@ class mc extends Canvas {
 		g.fillRect(checkmain.cbPoint[0][4].x + 50, checkmain.cbPoint[0][4].y, 650, 70);
 
 		BufferedImage in;
-		//String flocationString = "/Users/chenghanyu/Documents/Java/chinesecheck/src/chinesecheck/chess/";
-		String flocationString="/chess/";
+		// String flocationString =
+		// "/Users/chenghanyu/Documents/Java/chinesecheck/src/chinesecheck/chess/";
+		String flocationString = "/chess/";
 		try {
-//			in = ImageIO.read(new FileInputStream(flocationString+"00.png"));
-//		g.drawImage(in, 0, 0,50,50, this);
-			//URL rUrl=checkmain.class.getResource("/chess00.png");
+			// in = ImageIO.read(new FileInputStream(flocationString+"00.png"));
+			// g.drawImage(in, 0, 0,50,50, this);
+			// URL rUrl=checkmain.class.getResource("/chess00.png");
 
 			for (int i = 0; i < 10; i++) {
 				for (int j = 0; j < 9; j++) {
 					if (checkmain.chess_chess[i][j] != -1) {
 						switch (checkmain.chess_chess[i][j]) {
 						case 0:
-							
+
 							in = ImageIO.read(this.getClass().getResource(flocationString + "00.png"));
 							g.drawImage(in, checkmain.cbPoint[j][i].x + 25, checkmain.cbPoint[j][i].y - 25, 50, 50,
 									this);
@@ -360,6 +340,7 @@ class mc extends Canvas {
 							g.drawImage(in, checkmain.cbPoint[j][i].x + 25, checkmain.cbPoint[j][i].y - 25, 50, 50,
 									this);
 							break;
+						/* 紅色棋子VS黑色棋子 */
 						case 100:
 							in = ImageIO.read(this.getClass().getResource(flocationString + "10.png"));
 							g.drawImage(in, checkmain.cbPoint[j][i].x + 25, checkmain.cbPoint[j][i].y - 25, 50, 50,

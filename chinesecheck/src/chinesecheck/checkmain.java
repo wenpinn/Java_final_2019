@@ -88,6 +88,7 @@ public class checkmain {
 		frame_border.setSize(frame_width, frame_height);
 		Panel log_panel = new Panel();
 		mc canvas = new mc();
+
 		frame_border.setLayout(new BorderLayout(100, frame_height));
 		frame_border.add("West", log_panel);// 切出左側log console
 		log_panel.setPreferredSize(new Dimension(200, frame_height));
@@ -166,6 +167,40 @@ public class checkmain {
 			}
 
 		});
+
+		startButton.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+		});
 	}
 	// ++++++++++++window listener end
 
@@ -211,6 +246,7 @@ class mc extends Canvas {
 					}
 				}
 				System.out.println();
+				temp = 0;
 				// 得出cpb pos
 
 			}
@@ -233,10 +269,17 @@ class mc extends Canvas {
 					}
 				}
 				System.out.println();
-
-				temp = checkmain.chess_chess[tax][tay];
-				checkmain.chess_chess[tax][tay] = checkmain.chess_chess[tbx][tby];
-				checkmain.chess_chess[tbx][tby] = temp;
+				// System.out.print("cbp:" + tbx + "," + tby + "chess=(" +
+				// checkmain.chess_chess[tay][tax] + ")");
+				if (checkmain.chess_chess[tay][tax] == -1) {
+					temp = checkmain.chess_chess[tay][tax];
+					checkmain.chess_chess[tay][tax] = checkmain.chess_chess[tby][tbx];
+					checkmain.chess_chess[tby][tbx] = temp;
+				} else {
+					temp = checkmain.chess_chess[tay][tax];
+					checkmain.chess_chess[tay][tax] = -1;
+					checkmain.chess_chess[tby][tbx] = temp;
+				}
 				repaint();
 
 			}

@@ -75,10 +75,15 @@ public class checkmain {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		checkmain checkmain = new checkmain();
-
+		checkmain.makeboard();
 	}
 
 	public checkmain() {
+
+	}
+
+	void makeboard() {
+
 		frame_border = new Frame("象棋");
 		frame_border.setSize(frame_width, frame_height);
 		Panel log_panel = new Panel();
@@ -101,10 +106,10 @@ public class checkmain {
 
 				cbPoint[i][j] = new Point();
 
-				cbPoint[i][j].x = (i * 81);
+				cbPoint[i][j].x = (i * 80);
 				cbPoint[i][j].y = 40 + (j * 70);
-				// System.out.print(i + "," + j + "");
-				// System.out.print("(" + cbPoint[i][j].x + "," + cbPoint[i][j].y + ")\t");
+				System.out.print(i + "," + j + "");
+				System.out.print("(" + cbPoint[i][j].x + "," + cbPoint[i][j].y + ")\t");
 
 			}
 			System.out.println();
@@ -169,9 +174,10 @@ public class checkmain {
 class mc extends Canvas {
 	Point a = new Point();
 	Point b = new Point();
-	get_point_on_board pob;
-	int tax = 0, tay = 0;
-	int tbx = 0, tby = 0;
+	int temp = 0;
+	// get_point_on_board pob;
+	static int tax = 0, tay = 0;
+	static int tbx = 0, tby = 0;
 
 	public mc() {
 		addMouseListener(new MouseListener() {
@@ -189,7 +195,23 @@ class mc extends Canvas {
 				b.setLocation(e.getPoint());
 
 				// System.out.println("PPP " + a.x + "," + a.y);
-				pob = new get_point_on_board(a, b);
+				// pob = new get_point_on_board(a, b);
+				// Point[9][10];
+				System.out.print("cbpa pos= (");
+				for (int i = 0; i < 9; i++) {
+					if (Math.abs(a.x - (50 + i * 80)) <= 25) {
+						System.out.print(i + " , ");
+						tax = i;
+					}
+				}
+				for (int i = 0; i < 10; i++) {
+					if (Math.abs(a.y - (40 + i * 70)) <= 25) {
+						System.out.print(i + " )");
+						tay = i;
+					}
+				}
+				System.out.println();
+				// 得出cpb pos
 
 			}
 
@@ -197,7 +219,24 @@ class mc extends Canvas {
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
 				b.setLocation(e.getPoint());
+				System.out.print("cbpb pos= (");
+				for (int i = 0; i < 9; i++) {
+					if (Math.abs(b.x - (50 + i * 80)) <= 25) {
+						System.out.print(i + " , ");
+						tbx = i;
+					}
+				}
+				for (int i = 0; i < 10; i++) {
+					if (Math.abs(b.y - (40 + i * 70)) <= 25) {
+						System.out.print(i + " )");
+						tby = i;
+					}
+				}
+				System.out.println();
 
+				temp = checkmain.chess_chess[tax][tay];
+				checkmain.chess_chess[tax][tay] = checkmain.chess_chess[tbx][tby];
+				checkmain.chess_chess[tbx][tby] = temp;
 				repaint();
 
 			}
@@ -238,7 +277,7 @@ class mc extends Canvas {
 		g.drawLine(checkmain.cbPoint[3][9].x + 50, checkmain.cbPoint[3][9].y, checkmain.cbPoint[5][7].x + 50,
 				checkmain.cbPoint[5][7].y);
 		g.setColor(Color.gray);
-		g.fillRect(checkmain.cbPoint[0][4].x + 50, checkmain.cbPoint[0][4].y, 650, 70);
+		g.fillRect(50, checkmain.cbPoint[0][4].y, Math.abs(checkmain.cbPoint[0][4].x - checkmain.cbPoint[8][4].x), 70);
 
 		BufferedImage in;
 		// String flocationString =

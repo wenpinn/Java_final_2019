@@ -16,7 +16,7 @@ class get_point_on_board {
         set(a, b);
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 11; j++) {
-                System.err.print("cbp:(" + c.cbPoint[i][j].x + "," + c.cbPoint[i][j].y + ")\t");
+                System.err.print("cbp:(" + c.cbPoint[i][j].x + 50 + "," + c.cbPoint[i][j].y + ")\t");
             }
             System.err.println();
         }

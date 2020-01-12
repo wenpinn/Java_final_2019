@@ -52,8 +52,8 @@ public class checkmain {
 	TextField log_ipTextField = new TextField(); // 可能用不到 用來設定ip
 	TextField log_portTextField = new TextField(); // 可能用不到 用來設定port
 	TextField log_TextField = new TextField(); // 用來記錄ＬＯＧ 位置在最大的文字匡
-	Button startButton = new Button("開始");
-	Button nextstepButton = new Button("下一步");
+	Button startButton = new Button("Start");
+	Button nextstepButton = new Button("Next");
 	public static int[][] chess_chess = { { 7, 5, 3, 1, 0, 2, 4, 6, 8 }, // 0,j;j from 0 to 8
 			{ -1, -1, -1, -1, -1, -1, -1, -1, -1 }, // 1,j
 			{ -1, 9, -1, -1, -1, -1, -1, 10, -1 }, // 2,j
@@ -285,7 +285,7 @@ class mc extends Canvas {
 		BufferedImage in;
 		// String flocationString =
 		// "/Users/chenghanyu/Documents/Java/chinesecheck/src/chinesecheck/chess/";
-		String flocationString = "/chess/";
+		String flocationString = "\\chess\\";
 		try {
 			// in = ImageIO.read(new FileInputStream(flocationString+"00.png"));
 			// g.drawImage(in, 0, 0,50,50, this);

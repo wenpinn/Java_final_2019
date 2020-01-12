@@ -93,6 +93,7 @@ public class checkmain {
 		log_panel.add(log_TextField); // 作為ＬＯＧ的視窗
 		log_TextField.setEditable(false); // 不給編輯
 		log_panel.setBackground(Color.lightGray);
+		canvas.setBackground(Color.LIGHT_GRAY);
 		frame_border.add(canvas);
 
 		for (int i = 0; i < 9; i++) {
@@ -102,26 +103,12 @@ public class checkmain {
 
 				cbPoint[i][j].x = (i * 81);
 				cbPoint[i][j].y = 40 + (j * 70);
-				System.out.print(i + "," + j + "");
-				System.out.print("(" + cbPoint[i][j].x + "," + cbPoint[i][j].y + ")\t");
+				// System.out.print(i + "," + j + "");
+				// System.out.print("(" + cbPoint[i][j].x + "," + cbPoint[i][j].y + ")\t");
 
 			}
 			System.out.println();
 		}
-
-		// shape=new line();
-		// for(int i=0;i<9;i++) {//這之後要放到paint
-		// for(int j=0;j<8;j++)
-		// {
-		//
-		// //shape.set(cbPoint[i][j],cbPoint[i][j+1] );
-		// shape.set(cbPoint[i][j], cbPoint[i][j+1]);
-		// list.add(shape);
-		// repaint();
-		//
-		// }
-		// System.out.println();
-		// }
 
 		// chess board的i,j chess_chess的 i j;
 
@@ -177,18 +164,12 @@ public class checkmain {
 	}
 	// ++++++++++++window listener end
 
-	/*
-	 * @Override public void paint(Graphics g) { /*for(int i=0;i<9;i++)
-	 * {//這之後要放到paint for(int j=0;j<8;j++) { //g.drawLine(cbPoint[i][j].x,
-	 * cbPoint[i][j].y, cbPoint[i][j].x, cbPoint[i][j+1].y);
-	 * 
-	 * } } g.drawLine(500,500,1000,1000); }
-	 */
 }
 
 class mc extends Canvas {
 	Point a = new Point();
 	Point b = new Point();
+	get_point_on_board pob;
 	int tax = 0, tay = 0;
 	int tbx = 0, tby = 0;
 
@@ -207,20 +188,8 @@ class mc extends Canvas {
 				a.setLocation(e.getPoint());
 				b.setLocation(e.getPoint());
 
-				tax = a.x;
-				tax = a.y;
-				tbx = b.x;
-				tbx = b.y;
-				for (int i = 0; i < 10; i++) {
-					for (int j = 0; j < 9; j++) {
-						if (Math.abs(checkmain.cbPoint[j][i].x - tax) < 25
-								&& Math.abs(checkmain.cbPoint[j][i].y - tay) < 25) {
-							System.out.println("PPP " + tax + "," + tay);
-							System.out.println("SSS " + checkmain.cbPoint[j][i].x + "," + checkmain.cbPoint[j][i].y);
-						}
-
-					}
-				}
+				// System.out.println("PPP " + a.x + "," + a.y);
+				pob = new get_point_on_board(a, b);
 
 			}
 
@@ -228,17 +197,6 @@ class mc extends Canvas {
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
 				b.setLocation(e.getPoint());
-
-				// for(int i=0;i<10;i++) {
-				// for(int j=0;j<9;j++)
-				// {
-				// if(b.x-checkmain.cbPoint[i][j].x<25&&b.y-checkmain.cbPoint[i][j].y<25) {
-				// checkmain.chess_chess[tx][ty]=checkmain.chess_chess[i][j];
-				// checkmain.chess_chess[i][j]=-1;
-				// }
-				// }
-				// }
-				//
 
 				repaint();
 

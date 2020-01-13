@@ -42,6 +42,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 public class checkmain {
 
@@ -51,7 +53,7 @@ public class checkmain {
 	// List<shape> list=new ArrayList<shape>();
 	TextField log_ipTextField = new TextField(); // 可能用不到 用來設定ip
 	TextField log_portTextField = new TextField(); // 可能用不到 用來設定port
-	TextField log_TextField = new TextField(); // 用來記錄ＬＯＧ 位置在最大的文字匡
+	JTextArea log_TextField = new JTextArea(); // 用來記錄ＬＯＧ 位置在最大的文字匡
 	Button startButton = new Button("Start");
 	Button nextstepButton = new Button("Next");
 	mthread mt;
@@ -98,10 +100,13 @@ public class checkmain {
 		log_panel.add(nextstepButton);
 		log_panel.add(new Label("STATUS:"));
 		log_TextField.setPreferredSize(new Dimension(150, 500));
+		// log_TextField.setColumns(1000);
+		log_TextField.setWrapStyleWord(true);
 		log_panel.add(log_TextField); // 作為ＬＯＧ的視窗
 		log_TextField.setEditable(false); // 不給編輯
 		log_panel.setBackground(Color.lightGray);
 		canvas.setBackground(Color.LIGHT_GRAY);
+
 		frame_border.add(canvas);
 
 		for (int i = 0; i < 9; i++) {
@@ -178,11 +183,12 @@ public class checkmain {
 				mt = new mthread();
 				mt.start();
 				try {
-					Thread.sleep(100);
+					Thread.sleep(1000);
 				} catch (InterruptedException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+
 				log_TextField.setText(logString);
 
 			}

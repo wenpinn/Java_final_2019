@@ -54,6 +54,7 @@ public class checkmain {
 	TextField log_TextField = new TextField(); // 用來記錄ＬＯＧ 位置在最大的文字匡
 	Button startButton = new Button("Start");
 	Button nextstepButton = new Button("Next");
+	mthread mt;
 	public static int[][] chess_chess = { { 7, 5, 3, 1, 0, 2, 4, 6, 8 }, // 0,j;j from 0 to 8
 			{ -1, -1, -1, -1, -1, -1, -1, -1, -1 }, // 1,j
 			{ -1, 9, -1, -1, -1, -1, -1, 10, -1 }, // 2,j
@@ -69,6 +70,7 @@ public class checkmain {
 	public static Point[][] cbPoint = new Point[9][10];
 	public static int frame_width = 1200;
 	public static int frame_height = 800;
+	static String logString = new String();
 	public static int chessboard_width = frame_width;
 	public static int chessboard_heigh = frame_height;
 
@@ -109,8 +111,8 @@ public class checkmain {
 
 				cbPoint[i][j].x = (i * 80);
 				cbPoint[i][j].y = 40 + (j * 70);
-				System.out.print(i + "," + j + "");
-				System.out.print("(" + cbPoint[i][j].x + "," + cbPoint[i][j].y + ")\t");
+				// System.out.print(i + "," + j + "");
+				// System.out.print("(" + cbPoint[i][j].x + "," + cbPoint[i][j].y + ")\t");
 
 			}
 			System.out.println();
@@ -173,6 +175,15 @@ public class checkmain {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
+				mt = new mthread();
+				mt.start();
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				log_TextField.setText(logString);
 
 			}
 

@@ -43,7 +43,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 public class checkmain {
 
@@ -51,7 +50,7 @@ public class checkmain {
 	Canvas canvas;
 	ArrayList<String> log_arrlist = new ArrayList<String>(); // 用來log
 	// List<shape> list=new ArrayList<shape>();
-	TextField log_ipTextField = new TextField(); // 可能用不到 用來設定ip
+	static TextField log_ipTextField = new TextField(); // 可能用不到 用來設定ip
 	TextField log_portTextField = new TextField(); // 可能用不到 用來設定port
 	JTextArea log_TextField = new JTextArea(); // 用來記錄ＬＯＧ 位置在最大的文字匡
 	Button startButton = new Button("Start");
@@ -98,6 +97,9 @@ public class checkmain {
 		log_panel.setPreferredSize(new Dimension(200, frame_height));
 		log_panel.add(startButton);
 		log_panel.add(nextstepButton);
+		log_panel.add(new Label("SID:"));
+		log_panel.add(log_ipTextField);
+		log_ipTextField.setPreferredSize(new Dimension(150, 20));
 		log_panel.add(new Label("STATUS:"));
 		log_TextField.setPreferredSize(new Dimension(150, 500));
 		// log_TextField.setColumns(1000);
@@ -180,7 +182,8 @@ public class checkmain {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-				mt = new mthread();
+				String sid = log_ipTextField.getText();
+				mt = new mthread(sid);
 				mt.start();
 				try {
 					Thread.sleep(1000);
@@ -227,9 +230,12 @@ class mc extends Canvas {
 	Point a = new Point();
 	Point b = new Point();
 	int temp = 0;
+	// online online = new online(checkmain.log_ipTextField.getText());
 	// get_point_on_board pob;
 	static int tax = 0, tay = 0;
 	static int tbx = 0, tby = 0;
+
+	String s[] = new String[3];
 
 	public mc() {
 		addMouseListener(new MouseListener() {
@@ -249,16 +255,16 @@ class mc extends Canvas {
 				// System.out.println("PPP " + a.x + "," + a.y);
 				// pob = new get_point_on_board(a, b);
 				// Point[9][10];
-				System.out.print("cbpa pos= (");
+				// System.out.print("cbpa pos= (");
 				for (int i = 0; i < 9; i++) {
 					if (Math.abs(a.x - (50 + i * 80)) <= 25) {
-						System.out.print(i + " , ");
+						// System.out.print(i + " , ");
 						tax = i;
 					}
 				}
 				for (int i = 0; i < 10; i++) {
 					if (Math.abs(a.y - (40 + i * 70)) <= 25) {
-						System.out.print(i + " )");
+						// System.out.print(i + " )");
 						tay = i;
 					}
 				}
@@ -272,22 +278,33 @@ class mc extends Canvas {
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
 				b.setLocation(e.getPoint());
-				System.out.print("cbpb pos= (");
+				// System.out.print("cbpb pos= (");
 				for (int i = 0; i < 9; i++) {
 					if (Math.abs(b.x - (50 + i * 80)) <= 25) {
-						System.out.print(i + " , ");
+						// System.out.print(i + " , ");
 						tbx = i;
 					}
 				}
 				for (int i = 0; i < 10; i++) {
 					if (Math.abs(b.y - (40 + i * 70)) <= 25) {
-						System.out.print(i + " )");
+						// System.out.print(i + " )");
 						tby = i;
 					}
 				}
-				System.out.println();
+				// System.out.println();
 				// System.out.print("cbp:" + tbx + "," + tby + "chess=(" +
 				// checkmain.chess_chess[tay][tax] + ")");
+
+				s[0] = String.valueOf(checkmain.chess_chess[tay][tax]);
+				s[1] = String.valueOf(tbx);
+				s[2] = String.valueOf(tby);
+
+				chinesecheck.online.srtwalkchess(s);
+				System.out.print("you:(" + chinesecheck.online.walkchess[0] + " , " + chinesecheck.online.walkchess[1]
+						+ " , " + chinesecheck.online.walkchess[2] + ")");
+				checkmain.logString += "you:(" + chinesecheck.online.walkchess[0] + " , "
+						+ chinesecheck.online.walkchess[1] + " , " + chinesecheck.online.walkchess[2] + ")";
+
 				if (checkmain.chess_chess[tay][tax] == -1) {
 					temp = checkmain.chess_chess[tay][tax];
 					checkmain.chess_chess[tay][tax] = checkmain.chess_chess[tby][tbx];

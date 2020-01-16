@@ -12,13 +12,20 @@ public class mthread extends Thread {
     static String[] webinfos;
     checkmain c;
 
-    public mthread() {
-        online = new online();
+    public mthread(String sid) {
+        online = new online(sid);
+
     }
 
     public void run() {
         // System.out.println("SB info:" + webinfo + ")");
         // System.out.println(online.webinfo);
+        try {
+            online.gethttp();
+        } catch (final IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         if (online.webinfo.contains("Error")) {
             String tempString = new String();
             // tempString += webstatus();
@@ -32,9 +39,8 @@ public class mthread extends Thread {
             System.out.print("(room ID:" + webinfos[0] + " ,對手學號:" + webinfos[1] + ")");
             try {
 
-                online.webinfo = null;// 清空
                 online.selectroom(webinfos);
-                webinfos = null;// 清空
+
                 System.out.print(online.webinfo);
             } catch (IOException e) {
                 // TODO Auto-generated catch block
@@ -42,6 +48,10 @@ public class mthread extends Thread {
             }
             if (online.webinfo.contains("success")) {
                 checkmain.logString += "success\n";
+                webinfos = null;// 清空
+                online.webinfo = null;// 清空
+                Thread wc = new walkchess();
+                wc.start();
             } else {// ont success
                 checkmain.logString += "Check Your SID";
             }
@@ -56,17 +66,72 @@ public class mthread extends Thread {
 
 }
 
-class online {
-    public String webinfo = "";
-    public String SID = "c02999";
+class walkchess extends Thread {
+    static online o = new online(online.SID);
+    String[] wifo;
 
-    public online() {
+    public walkchess() {
+
+    }
+
+    public void run() {
         try {
-            gethttp();
-        } catch (final IOException e) {
+            o.webinfo = "";
+            o.waittogo();
+            wifo = o.webinfo.split(" ");
+            checkmain.logString += "\n" + o.webinfo;
+        } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        switch (wifo[0]) {
+        case "0":
+            if (wifo[1] == wifo[2]) {
+                try {
+                    o.play(online.walkchess);
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+            } else {
+
+            }
+            break;
+        case "1":
+            break;
+        case "2":
+            try {
+                sleep(3000);
+                System.out.println("Waiting");
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            this.run();
+
+            break;
+        case "-1":
+            break;
+
+        }
+
+    }
+
+}
+
+class online {
+    public String webinfo = "";
+    static String roomid;
+    static String[] walkchess = new String[3];
+    public static String SID = "";
+
+    public online(String sid) {
+        SID = sid;
+
+    }
+
+    static void srtwalkchess(String[] s) {
+        walkchess = s;
     }
 
     String getcurrentinfo() {
@@ -86,10 +151,11 @@ class online {
             webinfo += value;
         }
         is.close();
-
+        System.out.print(url);
     }
 
     void selectroom(String[] pass) throws IOException {
+        roomid = pass[0];
         final URL url = new URL(
                 "http://140.138.147.44:6004/you_r_fired/select_room?SID=" + SID + "&room_id=" + pass[0]);
         final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -102,10 +168,41 @@ class online {
             final String value = new String(tmp, UTF_8);
             webinfo += value;
         }
+        System.out.print(url);
         is.close();
     }
 
-    void waittogo() {
+    void waittogo() throws IOException {
+        final URL url = new URL("http://140.138.147.44:6004/you_r_fired/wait?SID=" + SID + "&room_id=" + roomid);
+        final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.connect();
+        final BufferedInputStream is = new BufferedInputStream(conn.getInputStream());
+        final byte[] tmp = new byte[1024];
+        int len = 0;
+        final Charset UTF_8 = Charset.forName("BIG5");
+        while ((len = is.read(tmp)) != -1) {
+            final String value = new String(tmp, UTF_8);
+            webinfo += value;
+        }
+        System.out.print(url);
+        is.close();
+    }
 
+    void play(String[] status) throws IOException {
+        final URL url = new URL("http://140.138.147.44:6004/you_r_fired/play?SID=" + SID + "&room_id=" + roomid
+                + "&type=" + status[0] + "&x=" + status[1] + "&y=" + status[2]);
+        final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.connect();
+        final BufferedInputStream is = new BufferedInputStream(conn.getInputStream());
+        final byte[] tmp = new byte[1024];
+        int len = 0;
+        final Charset UTF_8 = Charset.forName("BIG5");
+        while ((len = is.read(tmp)) != -1) {
+            final String value = new String(tmp, UTF_8);
+            webinfo += value;
+        }
+
+        is.close();
+        System.out.print(url);
     }
 }
